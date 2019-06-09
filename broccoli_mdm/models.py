@@ -6,3 +6,5 @@ class Countries(db.Model):
     country_name = db.Column(db.String(64), index=True, unique=True)
     iso_code = db.Column(db.String(120), index=True, unique=True)
     currency_code = db.Column(db.String(128))
+
+
