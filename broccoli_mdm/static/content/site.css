@@ -1,0 +1,97 @@
+﻿html, body {
+    height: 100%;
+}
+
+body {
+    padding-bottom: 20px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+/* styles for validation helpers */
+.field-validation-error {
+    color: #b94a48;
+}
+
+.field-validation-valid {
+    display: none;
+}
+
+input.input-validation-error {
+    border: 1px solid #b94a48;
+}
+
+input[type="checkbox"].input-validation-error {
+    border: 0 none;
+}
+
+.validation-summary-errors {
+    color: #b94a48;
+}
+
+.validation-summary-valid {
+    display: none;
+}
+
+.navbar {
+    background-color: #1A73E8;
+    padding-top : 0px;
+}
+
+.navbar-brand {
+    color: white;
+    font-family: Verdana;
+    font-size: x-large
+}
+
+
+
+/*!
+ * Start Bootstrap - Simple Sidebar (https://startbootstrap.com/template-overviews/simple-sidebar)
+ * Copyright 2013-2019 Start Bootstrap
+ * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-simple-sidebar/blob/master/LICENSE)
+ */
+body {
+    overflow-x: hidden;
+}
+
+
+.sidenav {
+    height: 95%; /* Full-height: remove this if you want "auto" height */
+    width: 20%; /* Set the width of the sidebar */
+    float:left;
+    left: 0;
+    background-color: white; /* Black */
+    overflow-x: hidden; /* Disable horizontal scroll */
+    padding-top: 20px;
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12);
+}
+
+.sidenav-item {
+    padding-left: 60px;
+    padding-top: 15px;
+    font-family: Roboto;
+    font-size: 25px;
+    color: #242424;
+    display: block;
+}
+
+.item-group {
+    padding-left: 30px;
+    padding-top: 15px;
+    font-family: Roboto;
+    font-size: 25px;
+    color: #999999;
+    display: block;
+}
