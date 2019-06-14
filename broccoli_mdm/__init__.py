@@ -14,5 +14,6 @@ migrate = Migrate(app, db)
 manager = APIManager(app, flask_sqlalchemy_db=db)
 
 import broccoli_mdm.models
+import broccoli_mdm.init_models
 import broccoli_mdm.views
 import broccoli_mdm.views_api
