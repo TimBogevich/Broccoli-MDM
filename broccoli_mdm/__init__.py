@@ -12,7 +12,7 @@ app.config.from_object(Config)
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 manager = APIManager(app, flask_sqlalchemy_db=db)
-db.reflect()
+
 
 import broccoli_mdm.models
 import broccoli_mdm.init_models

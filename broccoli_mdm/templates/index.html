@@ -2,22 +2,7 @@
 
 {% block content %}
 <div class="row p-3">  
-    <div class="col col-md-9">
-        <button id="btn_save" class="btn btn-primary" type="button">Save</button>
-        <button class="btn btn-primary" type="button">Permissions</button>
-        <button class="btn btn-primary" type="button">Add column</button>
-    </div>
-    <div class="col col-md-3">    
-        <div class="btn-group" role="group">
-                <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Options
-                </button>
-                <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                    <a class="dropdown-item" href="#">API</a>
-                    <a class="dropdown-item" href="#">Business process</a>
-                </div>
-        </div>
-    </div>
+    <a href="/table/countries">Countries</a>
 </div>
 
 <div class="row p-3">
@@ -28,7 +13,5 @@
 
 
 {% block scripts %}
-<script src="https://cdn.jsdelivr.net/npm/handsontable@latest/dist/handsontable.full.min.js"></script>
-<script src="/static/scripts/spreadsheet.js"></script>
 {% endblock %}
 

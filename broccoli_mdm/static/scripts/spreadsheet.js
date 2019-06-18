@@ -23,24 +23,7 @@ spreadsheet = new Handsontable(hot, {
     colHeaders: Object.keys(table[0]),
     rowHeaders: true
 });
-/*
-//write all changes to array - cdc. Cdc stores only index of object from JSON table
-spreadsheet.addHook('beforeChange', function(changes, src) {
-    var index = changes[0][0]
-    console.log(changes)
-    if (window.cdc || (window.cdc = [])) {
-        if (table[index].id) {
-            var changeType = "edit"
-        }
-        else {
-            var changeType = "create"
-        }
-        if (!cdc.find(x => x.index == index)) {
-            var prop = {"index": index, "changeType": changeType}
-            cdc.push(prop);
-        }
-    }
-  }); */
+
 
 $(document).ready(function () {
 
@@ -99,3 +82,11 @@ btn_save.onclick = function() {
     cdc = []
     alert('data saved'); 
 };
+
+
+function getUrlPath(indent) {
+    var url = window.location.pathname;
+    var array = url.split("/");
+    var array = array.slice(1).slice(-3);
+    return array[indent];
+}

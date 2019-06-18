@@ -3,8 +3,8 @@ from broccoli_mdm import app, manager
 from broccoli_mdm.init_models import *
 from sqlalchemy.inspection import inspect
 
-
-manager.create_api(countries, methods=['GET', 'POST', 'PATCH', 'PUT', 'DELETE'])
+for obj in d:
+    manager.create_api(d[obj], methods=['GET', 'POST', 'PATCH', 'PUT', 'DELETE'])
 
 
 @app.route('/api_service/pk/<class_name>')
