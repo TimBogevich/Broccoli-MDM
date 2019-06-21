@@ -1,8 +1,6 @@
 from broccoli_mdm.models import tables, connections
 from broccoli_mdm import db, Config, app
 
-for con in connections.query.all():
-    app.config.SQLALCHEMY_BINDS = {con.schema : con.connection_string}
 
 
 db.reflect()
