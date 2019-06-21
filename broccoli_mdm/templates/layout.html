@@ -13,11 +13,10 @@
 
 <body>
     <div class="navbar">
-        <div class="container">
             <div class="navbar-header">
-                <a href="/" class="navbar-brand">Broccoli</a>
+                <img class="img logo" src="/static/content/logo.png" alt="">
+                <a href="/" class="navbar-brand text-light">Broccoli</a>
             </div>
-        </div>
     </div>
 
 
@@ -25,14 +24,14 @@
     <div class="sidenav" id="sidebar-wrapper">
         <div class="list-group">
             <span class="item-group">Administration</span>
-            <a href="#" class="sidenav-item">Users</a>
-            <a href="#" class="sidenav-item">Groups</a>
-            <a href="#" class="sidenav-item">Access</a>
-            <a href="#" class="sidenav-item">Preferences</a>
+            <a href="/admin/tables" class="sidenav-item">Tables</a>
+            <a href="#" class="sidenav-item btn-link disabled">Users</a>
+            <a href="#" class="sidenav-item btn-link disabled">Groups</a>
+            <a href="#" class="sidenav-item btn-link disabled">Access</a>
+            <a href="/admin/connections" class="sidenav-item">Connections</a>
             <span class="item-group">Catalog</span>
-            <a href="#" class="sidenav-item">Rates</a>
-            <a href="#" class="sidenav-item">Countries</a>
-            <a href="#" class="sidenav-item">Customers</a>
+            <div id="table_list">
+            </div>
         </div>
     </div>
 
@@ -46,6 +45,7 @@
     <script>$(document).ready(function () { $('body').bootstrapMaterialDesign(); });</script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.min.js" integrity="sha256-S1J4GVHHDMiirir9qsXWc8ZWw74PHHafpsHp5PXtjTs=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.11/lodash.min.js" integrity="sha256-7/yoZS3548fXSRXqc/xYzjsmuW3sFKzuvOCHd06Pmps=" crossorigin="anonymous"></script>
+    <script src="/static/scripts/layout.js"></script>
     {% block scripts %}{% endblock %}
 
 </body>

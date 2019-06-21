@@ -95,3 +95,9 @@ body {
     color: #999999;
     display: block;
 }
+
+
+.logo {
+    height: 35px;
+    width: 35px;
+}

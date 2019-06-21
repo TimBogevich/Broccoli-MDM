@@ -12,6 +12,14 @@ def home():
 @app.route('/table/<tablename>')
 def tables(tablename):
     return render_template(
-        'tables.html',
+        'table.html',
         title='Table editor',
+    )
+
+
+@app.route('/admin/<path>')
+def admin(path):
+    return render_template(
+        'admin_tables.html',
+        title='Preferences editor',
     )
