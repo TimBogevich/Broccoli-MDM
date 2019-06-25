@@ -6,8 +6,10 @@ app.config["SQLALCHEMY_BINDS"] = dict()
 for con in connections.query.all():
     app.config["SQLALCHEMY_BINDS"][con.schema] = con.connection_string
 
-
-db.reflect()
+try:
+    db.reflect()
+except Exception as e:
+    print(e)    
 
 d = dict()
 for row in tables.query.all():
@@ -15,8 +17,11 @@ for row in tables.query.all():
         s = """class %s(db.Model):
                 __bind_key__ = '%s'
                 __tablename__ = '%s'""" % (row.name.lower(), row.schema, row.name.lower())
-        exec(s)
-        d[row.name] = eval(row.name.lower())
+        try:
+            exec(s)
+            d[row.name] = eval(row.name.lower())
+        except Exception as e: 
+            print(e)
 
 
 

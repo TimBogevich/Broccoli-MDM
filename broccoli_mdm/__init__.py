@@ -7,11 +7,16 @@ from flask_migrate import Migrate
 
 
 
+
 app = Flask(__name__)
+app.secret_key = "TO SET AS VARIABLE!!!!!!!!!!!!!!!!"
 app.config.from_object(Config)
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 manager = APIManager(app, flask_sqlalchemy_db=db)
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = "login"
 
 
 import broccoli_mdm.models

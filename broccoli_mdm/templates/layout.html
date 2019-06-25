@@ -5,10 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ title }} - My Flask Application</title>
     <link rel="shortcut icon" href="#" />
-    <link rel="stylesheet" href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css" integrity="sha384-wXznGJNEXNG1NFsbm0ugrLFMQPWswR3lds2VeinahP8N0zJw9VWSopbjv2x7WCvX" crossorigin="anonymous">
+    <link rel="stylesheet" href="/static/content/bootstrap-material-design.min.css">
     <link rel="stylesheet" type="text/css" href="/static/content/site.css" />
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/handsontable@latest/dist/handsontable.full.min.css">
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="/static/content/handsontable.full.min.css">
+    <script src="/static/scripts/jquery-3.4.1.min.js"></script>
+    <script src="/static/scripts/handsontable.full.min.js"></script>
 </head>
 
 <body>
@@ -17,7 +18,12 @@
                 <img class="img logo" src="/static/content/logo.png" alt="">
                 <a href="/" class="navbar-brand text-light">Broccoli</a>
             </div>
+            <div class="navbar-header">
+                    <span class="navbar-brand text-light">{{current_user.user_name}}</span>
+                    <a href="/logout" class="navbar-brand text-light">Logout</a>
+            </div>
     </div>
+
 
 
     <!-- Sidebar -->
@@ -40,11 +46,11 @@
     {% endblock %}
 
 
-    <script src="https://unpkg.com/popper.js@1.12.6/dist/umd/popper.js" integrity="sha384-fA23ZRQ3G/J53mElWqVJEGJzU0sTs+SvzG8fXVWP+kJQ1lwFAOkcUOysnlKJC33U" crossorigin="anonymous"></script>
-    <script src="https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js" integrity="sha384-CauSuKpEqAFajSpkdjv3z9t8E7RlpJ1UP0lKM/+NdtSarroVKu069AlsRPKkFBz9" crossorigin="anonymous"></script>
+    <script src="/static/scripts/popper.js"></script>
+    <script src="/static/scripts/bootstrap-material-design.js"></script>
     <script>$(document).ready(function () { $('body').bootstrapMaterialDesign(); });</script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.min.js" integrity="sha256-S1J4GVHHDMiirir9qsXWc8ZWw74PHHafpsHp5PXtjTs=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.11/lodash.min.js" integrity="sha256-7/yoZS3548fXSRXqc/xYzjsmuW3sFKzuvOCHd06Pmps=" crossorigin="anonymous"></script>
+    <script src="/static/scripts/axios.min.js"></script>
+    <script src="/static/scripts/lodash.min.js"></script>
     <script src="/static/scripts/layout.js"></script>
     {% block scripts %}{% endblock %}
 
