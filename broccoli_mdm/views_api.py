@@ -16,6 +16,6 @@ manager.create_api(connections, methods=['GET', 'POST', 'PATCH', 'PUT', 'DELETE'
 def api_tech_pk(class_name):
     return inspect(eval(class_name)).primary_key[0].name
 
-#to do. API returns table structure of class 
-#@app.route('/api_service/datamodel/<class_name>')
-#def api_service_model
+@app.route('/api_service/attributes/<class_name>')
+def api_tech_attributes(class_name):
+    return eval(class_name).getAttributes()

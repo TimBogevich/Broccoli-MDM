@@ -1,4 +1,4 @@
-from broccoli_mdm.models import tables, connections
+from broccoli_mdm.models import tables, connections, ClassToolkit
 from broccoli_mdm import db, app
 
 app.config["SQLALCHEMY_BINDS"] = dict()
@@ -14,7 +14,7 @@ except Exception as e:
 d = dict()
 for row in tables.query.all():
     if row.is_active == 1:
-        s = """class %s(db.Model):
+        s = """class %s(db.Model,ClassToolkit):
                 __bind_key__ = '%s'
                 __tablename__ = '%s'""" % (row.name.lower(), row.schema, row.name.lower())
         try:

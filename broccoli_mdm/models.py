@@ -1,20 +1,30 @@
 from broccoli_mdm import db,login_manager
 from flask_login import UserMixin
 import hashlib
+import json
 
-class tables(db.Model):
+class ClassToolkit():
+    @classmethod
+    def getAttributes(cls):
+        var = vars(cls)
+        var = filter(lambda x: "__" not in x, var)
+        var = filter(lambda x: "getAttributes" not in x, var)
+        var = filter(lambda x: "_sa_class_manager" not in x, var)
+        return json.dumps(list(var))
+
+class tables(db.Model,ClassToolkit):
     id = db.Column(db.Integer, primary_key=True)
     schema = db.Column(db.String) 
     name = db.Column(db.String, unique=True)
     sql_alchemy_definition = db.Column(db.String)
     is_active = db.Column(db.Integer)
 
-class connections(db.Model):
+class connections(db.Model,ClassToolkit):
     id = db.Column(db.Integer, primary_key=True)
     schema = db.Column(db.String, unique=True) 
     connection_string = db.Column(db.String)
 
-class Users(db.Model,UserMixin):
+class Users(db.Model,UserMixin,ClassToolkit):
     id = db.Column(db.Integer, primary_key=True)
     user_name = db.Column(db.String, unique=True)
     email = db.Column(db.String)
