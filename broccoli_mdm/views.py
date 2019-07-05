@@ -1,13 +1,13 @@
 from flask import render_template, request, redirect, url_for
 from broccoli_mdm import app, login_manager
 from flask_login import current_user, login_required, login_user, logout_user
-from broccoli_mdm.models import Users
+from broccoli_mdm.models import users
 import hashlib 
 
 
 @login_manager.user_loader
 def load_user(id):
-    return Users.query.filter_by(id=id).first()
+    return users.query.filter_by(id=id).first()
 
 
 @app.route('/')
@@ -46,7 +46,7 @@ def login():
     elif request.method == "POST":
         input = request.get_json()
         try:
-            user = Users.check_password(input["user_name"], input["password"])
+            user = users.check_password(input["user_name"], input["password"])
             login_user(user)
             return "success"
         except Exception as e:
