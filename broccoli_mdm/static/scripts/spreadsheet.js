@@ -1,11 +1,20 @@
 // Initialisation
 apiUrl = "/api/"+ getUrlPath(1)
 headerUrl = "/api_service/attributes/" + getUrlPath(1)
-apiData = httpGet(apiUrl);
-tableHeader = JSON.parse(httpGet(headerUrl));
+try {
+    apiData = httpGet(apiUrl);
+    tableHeader = JSON.parse(httpGet(headerUrl));
+    etalonTable = apiData.objects;
+    table = JSON.parse(JSON.stringify(etalonTable));
+}
+catch(error) {
+    console.log(error)
+    hot.innerText = "You have no permissions to read this object or it doesn't exists"
+    throw new Error("You have no permissions to read this object or it doesn't exists");
+}
 
-etalonTable = apiData.objects
-table = JSON.parse(JSON.stringify(etalonTable))
+
+
 
 if(table.length == 0 ) {
     table = {}

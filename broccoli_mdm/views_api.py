@@ -1,13 +1,39 @@
-from flask import render_template
+from flask import render_template, request
 from broccoli_mdm import app, manager
 from broccoli_mdm.init_models import *
 from sqlalchemy.inspection import inspect
 from broccoli_mdm.models import tables, connections, users, permissions
 from flask_login import current_user, login_required, login_user, logout_user
+import flask_restless
+from sqlalchemy import func
+
+def check_permissions(**kw):
+    table_name = request.path.split("/")[-1:][0] #extracting tablename from URL
+    curr_user = current_user.id if hasattr(current_user, "id") else None
+    table = tables.query.filter(func.lower(tables.name) == table_name).first()
+    permission = permissions.query.filter_by(table_id=table.id,user_id=curr_user).first()
+    if permission is None:
+        raise flask_restless.ProcessingException(code=401) 
+    if request.method == "GET" and permission.read_flag == 1:
+        pass
+    elif request.method == "PUT" and permission.edit_flag == 1:
+        pass
+    elif request.method == "POST" and permission.edit_flag == 1:
+        pass
+    elif request.method == "DELETE" and permission.delete_flag == 1:
+        pass
+    else:
+        raise flask_restless.ProcessingException(code=401) # Unauthorized
 
 #Generate API for list of taybles
 for obj in d:
-    manager.create_api(d[obj], methods=['GET', 'POST', 'PATCH', 'PUT', 'DELETE'])
+    manager.create_api(d[obj], 
+                        methods=['GET', 'POST', 'PUT', 'DELETE'], 
+                        preprocessors={
+                            'GET_MANY': [check_permissions],
+                            'PUT': [check_permissions],
+                            "DELETE" : [check_permissions]})
+
 
 manager.create_api(tables, methods=['GET', 'POST', 'PATCH', 'PUT', 'DELETE'])
 
