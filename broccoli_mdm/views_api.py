@@ -51,3 +51,10 @@ def api_tech_pk(class_name):
 @app.route('/api_service/attributes/<class_name>')
 def api_tech_attributes(class_name):
     return eval(class_name).getAttributes()
+
+
+@app.route('/api_service/create_new_user', methods=["POST"])
+def api_tech_create_new_user():
+    input = request.get_json()
+    users.create_new_user(user_name=input["user_name"], email=input["email"],password=input["password"])
+    return "success"

@@ -13,6 +13,13 @@ catch(error) {
     throw new Error("You have no permissions to read this object or it doesn't exists");
 }
 
+var snackbarOptions =  {
+    content: "Data saved", // text of the snackbar
+    style: "toast", // add a custom class to your snackbar
+    timeout: 5000
+}
+
+
 
 
 
@@ -30,7 +37,7 @@ btn_save.onclick = function() {
     detectChanges(etalonTable, table)
     writeBack(cdc, table)
     cdc = []
-    alert('data saved'); 
+    $.snackbar(snackbarOptions);
 };
 
 btn_add_row.onclick = function() {

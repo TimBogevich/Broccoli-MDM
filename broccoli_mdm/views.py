@@ -22,7 +22,7 @@ def index():
 @login_required
 def tables(tablename):
     return render_template(
-        'table.html',
+        'table_tablename.html',
         title='Table editor',
     )
 
@@ -32,6 +32,13 @@ def tables(tablename):
 def admin(path):
     return render_template(
         'admin_tables.html',
+        title='Preferences editor')
+
+@app.route('/admin/users')
+@login_required
+def admin_users():
+    return render_template(
+        'table_users.html',
         title='Preferences editor')
 
 

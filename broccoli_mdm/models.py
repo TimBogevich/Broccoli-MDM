@@ -35,8 +35,13 @@ class users(db.Model,UserMixin,ClassToolkit):
     def check_password(user_name, password):
         user = users.query.filter_by(user_name=user_name).first()
         hash = hashlib.md5(password.encode("utf-8")).hexdigest().upper()
-        if (hash + user.salt) == (user.password_md5 + user.salt):
+        if (hash) == (user.password_md5):
             return user
+    def create_new_user(user_name, email, password):
+        hash = hashlib.md5(password.encode("utf-8")).hexdigest().upper()
+        user = users(user_name=user_name, email=email, password_md5=hash)
+        db.session.add(user)
+        db.session.commit()
             
 class permissions(db.Model,UserMixin,ClassToolkit):
     id = db.Column(db.Integer, primary_key=True)
