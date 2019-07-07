@@ -3,11 +3,12 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ title }} - My Flask Application</title>
+    <title>{{ title }} - Broccoli MDM</title>
     <link rel="shortcut icon" href="#" />
     <link rel="stylesheet" href="/static/content/bootstrap-material-design.min.css">
     <link rel="stylesheet" type="text/css" href="/static/content/site.css" />
     <link rel="stylesheet" type="text/css" href="/static/content/handsontable.full.min.css">
+    <link rel="stylesheet" type="text/css" href="/static/content/jquery-ui.css">
     <script src="/static/scripts/jquery-3.4.1.min.js"></script>
     <script src="/static/scripts/handsontable.full.min.js"></script>
 </head>
@@ -47,7 +48,7 @@
 
     {% block add %}
     {% endblock %}
-
+    <script src="/static/scripts/jquery-ui.min.js"></script>
     <script src="/static/scripts/popper.js"></script>
     <script src="/static/scripts/bootstrap-material-design.js"></script>
     <script>$(document).ready(function () { $('body').bootstrapMaterialDesign(); });</script>

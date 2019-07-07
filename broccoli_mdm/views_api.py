@@ -56,5 +56,6 @@ def api_tech_attributes(class_name):
 @app.route('/api_service/create_new_user', methods=["POST"])
 def api_tech_create_new_user():
     input = request.get_json()
-    users.create_new_user(user_name=input["user_name"], email=input["email"],password=input["password"])
-    return "success"
+    if input["user_name"] != "" and input["email"] != "" and input["user_name"] != "":
+        users.create_new_user(user_name=input["user_name"], email=input["email"],password=input["password"])
+        return "success"

@@ -26,9 +26,9 @@ class connections(db.Model,ClassToolkit):
 
 class users(db.Model,UserMixin,ClassToolkit):
     id = db.Column(db.Integer, primary_key=True)
-    user_name = db.Column(db.String, unique=True)
-    email = db.Column(db.String)
-    password_md5 = db.Column(db.String)
+    user_name = db.Column(db.String, unique=True, nullable=False)
+    email = db.Column(db.String, nullable=False)
+    password_md5 = db.Column(db.String, nullable=False)
     salt = db.Column(db.String)
     def get_id(self):
         return (self.id)
@@ -42,6 +42,10 @@ class users(db.Model,UserMixin,ClassToolkit):
         user = users(user_name=user_name, email=email, password_md5=hash)
         db.session.add(user)
         db.session.commit()
+
+#class groups(db.Model,UserMixin,ClassToolkit):
+#    id = db.Column(db.Integer, primary_key=True)
+# 
             
 class permissions(db.Model,UserMixin,ClassToolkit):
     id = db.Column(db.Integer, primary_key=True)

@@ -4,7 +4,7 @@
 {% block add %}
 <div class="row">
         <div class="col col-md-9">
-            <button id="btn_add_row" class="btn btn-primary" type="button" data-toggle="modal" data-target="#exampleModalCenter">Add User</button>
+            <button id="btn_add_row" class="btn btn-primary" type="button" data-toggle="modal" data-target="#modal_createUser">Add User</button>
         </div>
 </div>
 
@@ -15,8 +15,8 @@
 </div>
 
 
-<!-- Modal -->
-<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<!-- Modal. Add user. -->
+<div class="modal fade" id="modal_createUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
         <div class="modal-header">
@@ -28,27 +28,66 @@
         <div class="modal-body">
             <form>
                 <div class="form-group">
-                    <label for="message-text" class="col-form-label">User name:</label>
+                    <label for="message-text" class="col-form-label font-weight-bold">User name:</label>
                     <input class="form-control" id="username_input"></input>
                 </div>
                 
                 <div class="form-group">
-                        <label for="message-text" class="col-form-label">Email:</label>
+                        <label for="message-text" class="col-form-label font-weight-bold">Email:</label>
                         <input class="form-control" id="email_input"></input>
                 </div>
 
                 <div class="form-group">
-                        <label for="message-text" class="col-form-label">Password:</label>
+                        <label for="message-text" class="col-form-label font-weight-bold">Password:</label>
                         <input class="form-control" id="password_input"></input>
                 </div>
             </form>
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
+            <button type="button" onClick="createUser()" class="btn btn-primary">Create user</button>
         </div>
         </div>
     </div>
 </div>
-{% endblock %}
 
+
+<script>
+function createUser() {
+    request_data = {"user_name": username_input.value, "email": email_input.value, "password": password_input.value}
+
+    var snackbarOptions =  {
+        content: "User " + request_data.user_name + " successfully created" , 
+        style: "toast",
+        timeout: 5000
+    }
+
+    var snackbarOptionsError =  {
+        content: "FAIL!!! User " + request_data.user_name + " is not created" , 
+        style: "toast",
+        timeout: 5000
+    }
+
+    jQuery.ajax({
+        url: "/api_service/create_new_user",
+        type: "POST",
+        data: JSON.stringify(request_data),
+        dataType: "text",
+        async: false,
+        contentType: "application/json; charset=utf-8"})
+        .done(function() {
+            $.snackbar(snackbarOptions);
+            $('#modal_createUser').modal('toggle');
+            username_input.value = "";
+            email_input.value = "";
+            password_input.value = "";
+        })
+        .fail(function() {
+            $.snackbar(snackbarOptionsError);
+            $("#modal_createUser").effect("shake");
+        })
+    
+}
+
+</script>
+{% endblock %}

@@ -3,30 +3,36 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ title }} - My Flask Application</title>
+    <title>{{ title }} - Broccoli MDM</title>
     <link rel="shortcut icon" href="#" />
     <link rel="stylesheet" href="/static/content/bootstrap-material-design.min.css">
     <link rel="stylesheet" type="text/css" href="/static/content/site.css" />
+    <link rel="stylesheet" type="text/css" href="/static/content/jquery-ui.css">
     <script src="/static/scripts/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 </head>
 
 <body style="background-color: #1A73E8">
-    <div class="container">
-        <div class="col  mt-3 p-3 rounded bg-light">
+    <div class="row justify-content-md-center">
+        <div id="login_area" class="col col-3 mt-3 p-3 rounded bg-light">
             <h3>Please enter your credentials.</h3>
-            <label for="email" class="col-md-2 col-form-label font-weight-bold">User</label>
+            <label for="email" class="col col-form-label font-weight-bold">User</label>
             <input id ="user_name" class="form-control" type="text" name="User">
-            <label for="email" class="col-md-2 col-form-label font-weight-bold">Password</label>
+            <label for="email" class="col col-form-label font-weight-bold">Password</label>
             <input id="password" class="form-control" type="text" name="User">
-            <label class="col-md-2 col-form-label text-danger" id="fail_message">  </label>
+            <label class="col col-form-label text-danger" id="fail_message">  </label>
             <br>
             <button class="btn btn-primary mt-3" type="button" onclick="login()">Login</button>
         </div>            
     </div>
 
+    <div class="row p-3 justify-content-md-center">
+            <div class="B">B</div>
+    </div>
+
     <script src="/static/scripts/popper.js"></script>
     <script src="/static/scripts/bootstrap-material-design.js"></script>
     <script>$(document).ready(function () { $('body').bootstrapMaterialDesign(); });</script>
+    <script src="/static/scripts/jquery-ui.min.js"></script>
 </body>
 
 <script>
@@ -41,16 +47,15 @@
             data: JSON.stringify(request_data),
             dataType: "text",
             async: false,
-            contentType: "application/json; charset=utf-8",
-            success: function (data) {
-                if (data=="success") {
-                    window.location.replace('/');
-                }
-                else {
-                    fail_message.innerText = data
-                }
-            }
-        });
+            contentType: "application/json; charset=utf-8"})
+            .done(function() {
+                window.location.replace('/');
+            })
+            .fail(function(data) {
+                fail_message.innerText = data.responseText
+                $("#login_area").effect("shake");
+            });
+            
     }
 
 

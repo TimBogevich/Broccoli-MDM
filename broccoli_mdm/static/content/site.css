@@ -94,10 +94,24 @@ body {
     font-size: 20px;
     color: #999999;
     display: block;
-}
+}font-size: 10rem;
 
 
 .logo {
     height: 35px;
     width: 35px;
+}
+
+.B {
+    font-size: 30rem;
+    font-family: verdana, geneva, sans-serif;
+    font-weight: bold;
+    color:#000000;
+    opacity: 0.1;
+    position: absolute;
+    left: 50%;
+    top: 60%;
+    transform: translate3d(-50%,-50%,0);
+    z-index: 100;
+    pointer-events: none;
 }

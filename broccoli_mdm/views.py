@@ -1,4 +1,4 @@
-from flask import render_template, request, redirect, url_for
+from flask import render_template, request, redirect, url_for, Response
 from broccoli_mdm import app, login_manager
 from flask_login import current_user, login_required, login_user, logout_user
 from broccoli_mdm.models import users
@@ -58,7 +58,7 @@ def login():
             return "success"
         except Exception as e:
             print(e)
-            return "Fail: username or password incorrect. Please contact to your system administrator"
+            return Response("Fail: username or password incorrect. Please contact to your system administrator", 400)
 
 
 @app.route("/logout", methods=["GET"])
