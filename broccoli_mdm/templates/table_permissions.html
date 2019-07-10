@@ -1,0 +1,17 @@
+{% extends "table.html" %}
+
+
+{% block add %}
+<div class="row">
+        <div class="col col-md-9">
+            <button id="btn_add_row" class="btn btn-primary" type="button">+ row</button>
+        </div>
+    </div>
+    
+{% endblock %}
+
+
+{% block table_permissions %}
+<script src="/static/scripts/permissions.js">
+</script>
+{% endblock %}

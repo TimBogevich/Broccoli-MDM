@@ -1,3 +1,5 @@
+
+
 // Initialisation
 apiUrl = "/api/"+ getUrlPath(1)
 headerUrl = "/api_service/attributes/" + getUrlPath(1)
@@ -8,15 +10,17 @@ try {
     table = JSON.parse(JSON.stringify(etalonTable));
 }
 catch(error) {
-    console.log(error)
     hot.innerText = "You have no permissions to read this object or it doesn't exists"
     throw new Error("You have no permissions to read this object or it doesn't exists");
 }
 
-var snackbarOptions =  {
-    content: "Data saved", // text of the snackbar
-    style: "toast", // add a custom class to your snackbar
-    timeout: 5000
+
+function snackbarOptions(text) {
+    return snackbarOptions =  {
+        content: text, 
+        style: "toast", 
+        timeout: 5000
+    }
 }
 
 
@@ -37,7 +41,7 @@ btn_save.onclick = function() {
     detectChanges(etalonTable, table)
     writeBack(cdc, table)
     cdc = []
-    $.snackbar(snackbarOptions);
+    $.snackbar(snackbarOptions("Data saved successfully"));
 };
 
 btn_add_row.onclick = function() {

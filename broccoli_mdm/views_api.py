@@ -7,7 +7,15 @@ from flask_login import current_user, login_required, login_user, logout_user
 import flask_restless
 from sqlalchemy import func
 
+def admin_access(**kw):
+    if current_user.sysadmin != 1:
+        raise flask_restless.ProcessingException(code=401) # Unauthorized
+
+
 def check_permissions(**kw):
+    if current_user.sysadmin == 1:
+        print("A")
+        return 1
     table_name = request.path.split("/")[-1:][0] #extracting tablename from URL
     curr_user = current_user.id if hasattr(current_user, "id") else None
     table = tables.query.filter(func.lower(tables.name) == table_name).first()
@@ -23,7 +31,7 @@ def check_permissions(**kw):
     elif request.method == "DELETE" and permission.delete_flag == 1:
         pass
     else:
-        raise flask_restless.ProcessingException(code=401) # Unauthorized
+        raise flask_restless.ProcessingException(code=401) 
 
 #Generate API for list of taybles
 for obj in d:
@@ -35,13 +43,13 @@ for obj in d:
                             "DELETE" : [check_permissions]})
 
 
-manager.create_api(tables, methods=['GET', 'POST', 'PATCH', 'PUT', 'DELETE'])
+manager.create_api(tables, methods=['GET', 'POST', 'PATCH', 'PUT', 'DELETE'], preprocessors={'GET_MANY': [admin_access],'PUT': [admin_access],"DELETE" : [admin_access]})
 
-manager.create_api(connections, methods=['GET', 'POST', 'PATCH', 'PUT', 'DELETE'])
+manager.create_api(connections, methods=['GET', 'POST', 'PATCH', 'PUT', 'DELETE'],preprocessors={'GET_MANY': [admin_access],'PUT': [admin_access],"DELETE" : [admin_access]})
 
-manager.create_api(users, methods=['GET', 'POST', 'PATCH', 'PUT', 'DELETE'], exclude_columns=["password_md5", "salt"])
+manager.create_api(users, methods=['GET', 'POST', 'PATCH', 'PUT', 'DELETE'], exclude_columns=["password_md5", "salt"], preprocessors={'GET_MANY': [admin_access],'PUT': [admin_access],"DELETE" : [admin_access]})
 
-manager.create_api(permissions, methods=['GET', 'POST', 'PATCH', 'PUT', 'DELETE'])
+manager.create_api(permissions, methods=['GET', 'POST', 'PATCH', 'PUT', 'DELETE'], preprocessors={'GET_MANY': [admin_access],'PUT': [admin_access],"DELETE" : [admin_access]})
 
 
 @app.route('/api_service/pk/<class_name>')

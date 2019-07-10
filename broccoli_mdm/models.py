@@ -22,12 +22,17 @@ class tables(db.Model,ClassToolkit):
 class connections(db.Model,ClassToolkit):
     id = db.Column(db.Integer, primary_key=True)
     schema = db.Column(db.String, unique=True) 
+    #hostname = db.Column(db.String)
+    #database_name = db.Column(db.String)
+    #user_name = db.Column(db.String)
+    #password = db.Column(db.String)
     connection_string = db.Column(db.String)
 
 class users(db.Model,UserMixin,ClassToolkit):
     id = db.Column(db.Integer, primary_key=True)
     user_name = db.Column(db.String, unique=True, nullable=False)
     email = db.Column(db.String, nullable=False)
+    sysadmin = db.Column(db.Integer)
     password_md5 = db.Column(db.String, nullable=False)
     salt = db.Column(db.String)
     def get_id(self):

@@ -42,6 +42,14 @@ def admin_users():
         title='Preferences editor')
 
 
+@app.route('/admin/permissions')
+@login_required
+def admin_permissions():
+    return render_template(
+        'table_permissions.html',
+        title='Preferences editor')
+
+
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "GET":
