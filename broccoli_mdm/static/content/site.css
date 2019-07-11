@@ -47,6 +47,7 @@ input[type="checkbox"].input-validation-error {
 .navbar {
     background-color: #2647a3;
     padding-top : 0px;
+    padding-bottom: 0px; 
 }
 
 .navbar-brand {
