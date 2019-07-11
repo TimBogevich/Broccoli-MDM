@@ -1,1 +1,1 @@
-web: flask run --reload --with-threads --port 80
+web: sudo flask run --reload --with-threads --port 80
