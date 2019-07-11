@@ -1,1 +1,1 @@
-web: flask run --reload --with-threads --port 80 -h 0.0.0.0
+web: flask run --reload --with-threads --port 80
