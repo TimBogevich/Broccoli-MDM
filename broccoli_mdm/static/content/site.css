@@ -103,7 +103,7 @@ body {
 }
 
 .B {
-    font-size: 30rem;
+    font-size: 25vw;
     font-family: verdana, geneva, sans-serif;
     font-weight: bold;
     color:#000000;
@@ -118,11 +118,10 @@ body {
 }
 
 .login_title {
-    font-size: 5rem;
+    font-size: 4vw;
     font-family: verdana, geneva, sans-serif;
     font-weight: bold;
     color:#dddddd;
-    opacity: 1;
     position: absolute;
     left: 50%;
     top: 60%;
