@@ -20,8 +20,17 @@
                 <a href="/" class="navbar-brand text-light">Broccoli</a>
             </div>
             <div class="navbar-header">
-                    <span class="navbar-brand text-light">{{current_user.user_name}}</span>
-                    <a href="/logout" class="navbar-brand text-light">Logout</a>
+                <div class="dropdown">
+                    <button type="button" class="btn bmd-btn-fab bmd-btn-fab-sm dropdown-toggle active" id="dropdownMenuOffset" data-toggle="dropdown">
+                        <div class="text-white">
+                            {{current_user.user_name[:1]}}
+                        </div>
+                    </button>
+
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuOffset">
+                            <a class="dropdown-item" href="/logout">logout</a>
+                    </div>
+                </div>
             </div>
     </div>
 
