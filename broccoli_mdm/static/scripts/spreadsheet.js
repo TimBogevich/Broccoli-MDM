@@ -10,8 +10,8 @@ try {
     table = JSON.parse(JSON.stringify(etalonTable));
 }
 catch(error) {
-    hot.innerText = "You have no permissions to read this object or it doesn't exists"
-    throw new Error("You have no permissions to read this object or it doesn't exists");
+    canvas_area.innerText = "You have no permissions to read this object"
+    throw new Error("You have no permissions to read this object");
 }
 
 

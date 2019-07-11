@@ -1,28 +1,36 @@
 {% extends "layout.html" %}
 
 {% block content %}
-<div class="row p-3">  
-    <div class="col col-md-9">
-        <button id="btn_save" class="btn btn-primary" type="button">Save</button>
-        <button class="btn btn-primary" type="button">Permissions</button>
-        
-    </div>
-    <div class="col col-md-3">    
-        <div class="btn-group" role="group">
-                <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Options
-                </button>
-                <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                    <a id="api_link" target="_blank" class="dropdown-item" href="">API</a>
-                    <a class="dropdown-item disabled" href="">Business process (comming soon)</a>
-                </div>
+<div id="canvas_area">
+    <div class="row p-3">  
+        <div class="col col-md-9">
+            <button id="btn_save" class="btn btn-primary" type="button">Save</button>
+            <button class="btn btn-primary" type="button">Permissions</button>
+            
+        </div>
+        <div class="col col-md-3">    
+            <div class="btn-group" role="group">
+                    <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Options
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                        <a id="api_link" target="_blank" class="dropdown-item" href="">API</a>
+                        <a class="dropdown-item disabled" href="">Business process (comming soon)</a>
+                    </div>
+            </div>
         </div>
     </div>
+            
+    <div class="row p-3">
+        <div id="hot"></div>
+    </div>
+
+    {% block add %}
+    {% endblock %}
 </div>
 
-<div class="row p-3">
-    <div id="hot"></div>
-</div>
+
+
 
 
 <div id="snackbar" class="snackbar">
