@@ -1,1 +1,1 @@
-web: run_production.sh
+web: flask run --reload --with-threads --port 80 -h 0.0.0.0
