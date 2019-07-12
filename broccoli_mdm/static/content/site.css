@@ -68,16 +68,25 @@ body {
 }
 
 
+
 .sidenav {
-    height: 95%; /* Full-height: remove this if you want "auto" height */
     width: 20%; /* Set the width of the sidebar */
     float:left;
+    position: fixed;
+    height: 100%;
+    top: 0;
+    overflow: auto;
     left: 0;
     background-color: white; /* Black */
     overflow-x: hidden; /* Disable horizontal scroll */
-    padding-top: 20px;
+    padding-top: 35px;
     box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12);
 }
+
+  .canvas {
+    margin-left: 20%;
+    padding: 1px 16px;
+  }
 
 .sidenav-item {
     padding-left: 60px;
