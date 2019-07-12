@@ -45,7 +45,8 @@ tables_prepr=dict(PUT_SINGLE=[check_permissions],
 for obj in d:
     manager.create_api(d[obj], 
                         methods=['GET', 'POST', 'PUT', 'DELETE'], 
-                        preprocessors=preprocessors)
+                        preprocessors=preprocessors,
+                        results_per_page=0)
 
 
 manager.create_api(tables, methods=['GET', 'POST', 'PATCH', 'PUT', 'DELETE'], preprocessors=tables_prepr)
