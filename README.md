@@ -16,3 +16,16 @@ linux: python runserver.py
 windows: run_dev_windows.bat
 
 For production execution you have to use gunicorn.
+
+
+#Demo
+Demostration is availible here: htt://demo.brocco.me.
+The demo located on Heroku cloud provider and every 30 minutes of inactivity it idles and cold run can take over 30 seconds.
+Every commit to the master brach redeploy this demo.
+
+Admin access:
+admin:123
+
+Regular user:
+test:123
+
