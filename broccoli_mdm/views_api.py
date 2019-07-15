@@ -10,7 +10,7 @@ from sqlalchemy import func
 
 def check_permissions(**kw):
     if current_user.sysadmin == 1:
-        return 1
+        return
     table_name = request.path.split("/")[-1:][0] #extracting tablename from URL
     curr_user = current_user.id if hasattr(current_user, "id") else None
     table = tables.query.filter(func.lower(tables.name) == table_name).first()
@@ -18,13 +18,13 @@ def check_permissions(**kw):
     if permission is None:
         raise flask_restless.ProcessingException(code=401) 
     if request.method == "GET" and permission.read_flag == 1:
-        pass
+        return
     elif request.method == "PUT" and permission.edit_flag == 1:
-        pass
+        return
     elif request.method == "POST" and permission.edit_flag == 1:
-        pass
+        return
     elif request.method == "DELETE" and permission.delete_flag == 1:
-        pass
+        return
     else:
         raise flask_restless.ProcessingException(code=401) 
 
