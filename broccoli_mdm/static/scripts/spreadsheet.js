@@ -145,8 +145,8 @@ function detectChanges(originTable, modifiedTable) {
 function writeBack(changesArray, tableArray) {
     changesArray.forEach((element) => {
         row = tableArray.find( x => x.id === element.index )
-        delete row.id
         if (element.changeType == "edit") {
+            delete row.id
             axios.patch(apiUrl + "/" + row.id, row)
         }
         else if (element.changeType == "insert") {
