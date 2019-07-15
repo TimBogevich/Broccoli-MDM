@@ -23,14 +23,11 @@ function snackbarOptions(text) {
     }
 }
 
-function getsizeMask() {
-    columns = Object.keys(table[0])
-    columns.forEach(function(part, index, theArray) {
-        if (theArray[index] == "id") {
-            theArray[index] = 0.1
-        }
-        else {
-            theArray[index] = null
+function getColumnProps() {
+    columns = []
+    tableHeader.forEach(function(part, index, theArray) {
+        if (theArray[index] != "id") {
+            columns.push({data:theArray[index]})
         }
       });
     return columns
@@ -83,21 +80,18 @@ function httpGet(theUrl) {
 spreadsheet = new Handsontable(hot, {
     data: table,
     colHeaders: true,
-    licenseKey: 'non-commercial-and-evaluation',
-    colHeaders: Object.keys(table[0]),
+    colHeaders: tableHeader.filter(prop => prop != "id"),
     contextMenu: true,
     rowHeaders: true,
     startRows:  1,
-    manualColumnResize: getsizeMask()
+    columns: getColumnProps()
 });
 
 
 Handsontable.hooks.add('afterCreateRow', addIds, spreadsheet);
 
 function addIds(index) {
-    ids = spreadsheet.getDataAtCol(
-        spreadsheet.propToCol("id")
-    )
+    ids = table.map(a => a.id)
     maxId = Math.max(...ids)
     table[index]["id"] = maxId + 1
     spreadsheet.render()
