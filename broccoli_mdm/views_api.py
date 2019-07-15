@@ -44,7 +44,7 @@ tables_prepr=dict(PUT_SINGLE=[check_permissions],
 #Generate API for list of taybles
 for obj in d:
     manager.create_api(d[obj], 
-                        methods=['GET', 'POST', 'PUT', 'DELETE'], 
+                        methods=['GET', 'POST', 'PATCH', 'DELETE'], 
                         preprocessors=preprocessors,
                         results_per_page=0)
 

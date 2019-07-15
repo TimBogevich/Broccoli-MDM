@@ -23,7 +23,18 @@ function snackbarOptions(text) {
     }
 }
 
-
+function getsizeMask() {
+    columns = Object.keys(table[0])
+    columns.forEach(function(part, index, theArray) {
+        if (theArray[index] == "id") {
+            theArray[index] = 0.1
+        }
+        else {
+            theArray[index] = null
+        }
+      });
+    return columns
+}
 
 
 
@@ -76,14 +87,25 @@ spreadsheet = new Handsontable(hot, {
     colHeaders: Object.keys(table[0]),
     contextMenu: true,
     rowHeaders: true,
-    hiddenColumns: true,
-    startRows:  1
+    startRows:  1,
+    manualColumnResize: getsizeMask()
 });
 
-var pluginHideColumn = spreadsheet.getPlugin('hiddenColumns');
-pluginHideColumn.hideColumn(
-    spreadsheet.propToCol("id")
-);
+
+Handsontable.hooks.add('afterCreateRow', addIds, spreadsheet);
+
+function addIds(index) {
+    ids = spreadsheet.getDataAtCol(
+        spreadsheet.propToCol("id")
+    )
+    maxId = Math.max(...ids)
+    table[index]["id"] = maxId + 1
+    spreadsheet.render()
+}
+
+
+
+
 spreadsheet.render()
 
 $(document).ready(function () {
@@ -123,8 +145,9 @@ function detectChanges(originTable, modifiedTable) {
 function writeBack(changesArray, tableArray) {
     changesArray.forEach((element) => {
         row = tableArray.find( x => x.id === element.index )
+        delete row.id
         if (element.changeType == "edit") {
-            axios.put(apiUrl + "/" + row.id, row)
+            axios.patch(apiUrl + "/" + row.id, row)
         }
         else if (element.changeType == "insert") {
             axios.post(apiUrl, row)
@@ -148,10 +171,5 @@ function getUrlPath(indent) {
 }
 
 function addRow() {
-    ids = spreadsheet.getDataAtCol(
-        spreadsheet.propToCol("id")
-    )
-    maxId = Math.max(...ids)
-    table.push({"id": maxId+1})
-    spreadsheet.render()
+    spreadsheet.alter("insert_row")
 }
