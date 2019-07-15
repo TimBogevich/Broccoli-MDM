@@ -1,6 +1,6 @@
 # Broccoli-MDM
 Broccoli-MDM is an open source master data management tool(MDM).
-MDM tools are used to store and define and control common data of organisation in one point.
+MDM tools are used to store and define and control common data of an organisation in the one point.
 
 ## Installation for developement
 
@@ -19,7 +19,7 @@ linux: python runserver.py
 
 windows: run_dev_windows.bat
 
-For production execution you have to use gunicorn.
+For production execution you have to use "Gunicorn".
 
 
 ## Screenshots
@@ -29,8 +29,8 @@ http://brocco.me
 
 ## Demo
 Demostration is availible here: http://demo.brocco.me.
-The demo located on Heroku cloud provider and every 30 minutes of inactivity it idles and cold run can take over 30 seconds.
-Every commit to the master brach redeploy this demo.
+The demo is located on "Heroku" cloud provider and every 30 minutes of inactivity it idles and a cold run can take over 30 seconds.
+Every commit to the master brach redeploys this demo.
 
 Admin access:
 admin:123
