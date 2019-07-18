@@ -4,12 +4,13 @@ from flask_login import LoginManager
 from broccoli_mdm.config import Config
 from flask_restless import APIManager
 from flask_migrate import Migrate
+import os
 
 
 
 
 app = Flask(__name__)
-app.secret_key = "TO SET AS VARIABLE!!!!!!!!!!!!!!!!"
+app.secret_key = os.environ.get("BROCCOLI_SECRET_KEY")
 app.config.from_object(Config)
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
