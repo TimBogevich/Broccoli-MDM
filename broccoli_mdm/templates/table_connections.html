@@ -1,0 +1,128 @@
+{% extends "table.html" %}
+
+
+{% block add %}
+<div class="row">
+    <div class="col col-md-9">
+        <button id="btn_add_row" class="btn btn-primary" type="button" data-toggle="modal" data-target="#modal_createConnection">Add connection</button>
+    </div>
+</div>
+ 
+
+
+<!-- Modal. Add connection. -->
+<div class="modal fade" id="modal_createConnection" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">Create connection</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <form>
+                <div class="form-group">
+                    <div class="form-group">
+                        <label for="message-text" class="col-form-label font-weight-bold">Provider:</label>
+                        <select id="providers" class="form-control dropdown" name="" required>
+                            <option disabled selected value> -- select  DBMS -- </option>
+                            <option value='mysql'>MySQL</option>
+                            <option value='oracle'>Oracle</option>
+                            <option value='postgres'>Postgres</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                        <label for="message-text" class="col-form-label font-weight-bold">Connection name</label>
+                        <input class="form-control" id="name_input"></input>
+                </div>
+
+                <div class="form-group">
+                        <label for="message-text" class="col-form-label font-weight-bold">Hostname:port</label>
+                        <input class="form-control" id="hostname_input"></input>
+                </div>
+                
+                <div class="form-group">
+                        <label for="message-text" class="col-form-label font-weight-bold">Database</label>
+                        <input class="form-control" id="database_input"></input>
+                </div>
+
+                <div class="form-group">
+                        <label for="message-text" class="col-form-label font-weight-bold">User:</label>
+                        <input class="form-control" id="user_input"></input>
+                </div>
+
+                <div class="form-group">
+                        <label for="message-text" class="col-form-label font-weight-bold">Password:</label>
+                        <input class="form-control" id="password_input"></input>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" onClick="createConnection()" class="btn btn-primary">Create</button>
+            <button type="button" onClick="testConnection()" class="btn btn-primary">Test</button>
+        </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<script>
+
+    function createConnection() {
+        request_data = {
+            "schema": name_input.value,
+            "connection_string":  providers.value + "://" + user_input.value +":"+ password_input.value + "@" + hostname_input.value + "/" +database_input.value,
+            "id": (getMaxId() + 1).toString()
+        }
+    
+        
+        jQuery.ajax({
+            url: "/api/connections",
+            type: "POST",
+            data: JSON.stringify(request_data),
+            dataType: "text",
+            contentType: "application/json; charset=utf-8"})
+            .done(function(data) {
+                showSnackBar(data)
+            })
+            .fail(function(data) {
+                showSnackBar(data)
+                $("#modal_createConnection").effect("shake");
+            })
+
+    }
+
+    function testConnection() {
+        /* The connection string should be styled for SQL Alchemy
+        //postgresql://scott:tiger@localhost:5432/mydatabase'
+        */
+        request_data = {"connection_string":  providers.value + "://" + user_input.value +":"+ password_input.value + "@" + hostname_input.value + "/" +database_input.value}
+    
+
+        jQuery.ajax({
+            url: "/api_service/check_connection",
+            type: "POST",
+            data: JSON.stringify(request_data),
+            dataType: "text",
+            contentType: "application/json; charset=utf-8"})
+            .done(function(data) {
+                showSnackBar(data.responseText)
+            })
+            .fail(function(data) {
+                showSnackBar(data.responseText)
+                $("#modal_createConnection").effect("shake");
+            })
+        
+    }
+        
+</script>
+
+
+
+{% endblock %}

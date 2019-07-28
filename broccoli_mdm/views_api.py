@@ -1,4 +1,4 @@
-from flask import render_template, request
+from flask import render_template, request, Response
 from broccoli_mdm import app, manager
 from broccoli_mdm.init_models import *
 from sqlalchemy.inspection import inspect
@@ -30,6 +30,7 @@ def check_permissions(**kw):
 
 preprocessors=dict(GET_MANY=[check_permissions],
                     GET_SINGLE=[check_permissions], 
+                    POST_SINGLE=[check_permissions],
                     PUT_SINGLE=[check_permissions], 
                     PUT_MANY=[check_permissions], 
                     DELETE_MANY=[check_permissions],
@@ -73,3 +74,17 @@ def api_tech_create_new_user():
     if input["user_name"] != "" and input["email"] != "" and input["user_name"] != "":
         users.create_new_user(user_name=input["user_name"], email=input["email"],password=input["password"])
         return "success"
+
+@app.route('/api_service/check_connection', methods=["POST"])
+def api_tech_check_connection(connection_string=None):
+    input = request.get_json()
+    connection_string = input.get("connection_string") or connection_string
+    try:
+        from sqlalchemy import create_engine
+        engine = create_engine(connection_string)
+        con = engine.connect()
+        con.execute("select 1")
+        return Response("Connection success",status=200)
+    except Exception as e:
+        print(e)
+        return Response("Can't connect to database: "+ str(e) ,status=400)

@@ -22,10 +22,6 @@ class tables(db.Model,ClassToolkit):
 class connections(db.Model,ClassToolkit):
     id = db.Column(db.Integer, primary_key=True)
     schema = db.Column(db.String, unique=True) 
-    #hostname = db.Column(db.String)
-    #database_name = db.Column(db.String)
-    #user_name = db.Column(db.String)
-    #password = db.Column(db.String)
     connection_string = db.Column(db.String)
 
 class users(db.Model,UserMixin,ClassToolkit):

@@ -15,13 +15,15 @@ catch(error) {
 }
 
 
-function snackbarOptions(text) {
-    return snackbarOptions =  {
+function showSnackBar(text, style="toast", timeout=5000){
+    snackbarOptions =  {
         content: text, 
-        style: "toast", 
-        timeout: 5000
+        style: style, 
+        timeout: timeout
     }
+    $.snackbar(snackbarOptions)
 }
+
 
 function getColumnProps() {
     columns = []
@@ -49,12 +51,9 @@ btn_save.onclick = function() {
     detectChanges(etalonTable, table)
     writeBack(cdc, table)
     cdc = []
-    $.snackbar(snackbarOptions("Data saved successfully"));
+    showSnackBar("Data saved successfully");
 };
 
-btn_add_row.onclick = function() {
-    addRow();
-}
 
 // Interface
 api_link.href = apiUrl
@@ -91,13 +90,15 @@ spreadsheet = new Handsontable(hot, {
 Handsontable.hooks.add('afterCreateRow', addIds, spreadsheet);
 
 function addIds(index) {
-    ids = table.map(a => a.id)
-    maxId = Math.max(...ids)
-    table[index]["id"] = maxId + 1
+    table[index]["id"] = getMaxId() + 1
     spreadsheet.render()
 }
 
 
+function getMaxId() {
+    ids = table.map(a => a.id)
+    return parseInt(Math.max(...ids))
+}
 
 
 spreadsheet.render()
@@ -140,7 +141,6 @@ function writeBack(changesArray, tableArray) {
     changesArray.forEach((element) => {
         row = tableArray.find( x => x.id === element.index )
         if (element.changeType == "edit") {
-            delete row.id
             axios.patch(apiUrl + "/" + row.id, row)
         }
         else if (element.changeType == "insert") {

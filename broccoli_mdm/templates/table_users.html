@@ -4,13 +4,13 @@
 {% block add %}
 <div class="row">
         <div class="col col-md-9">
-            <button id="btn_add_row" class="btn btn-primary" type="button" data-toggle="modal" data-target="#modal_createUser">Add User</button>
+            <button id="btn_add_row" class="btn btn-primary" type="button" data-toggle="modal" data-target="#modal_createUser">Create User</button>
         </div>
 </div>
 
 <div class="row">
         <div class="col col-md-9">
-            <button id="btn_add_row" class="btn btn-primary" type="button" data-toggle="modal" data-target="#exampleModalCenter">Change password</button>
+            <button id="btn_change_pass" class="btn btn-primary" type="button" data-toggle="modal" data-target="#exampleModalCenter" disabled>Change password</button>
         </div>
 </div>
 
@@ -56,18 +56,6 @@
 function createUser() {
     request_data = {"user_name": username_input.value, "email": email_input.value, "password": password_input.value}
 
-    var snackbarOptions =  {
-        content: "User " + request_data.user_name + " successfully created" , 
-        style: "toast",
-        timeout: 5000
-    }
-
-    var snackbarOptionsError =  {
-        content: "FAIL!!! User " + request_data.user_name + " is not created" , 
-        style: "toast",
-        timeout: 5000
-    }
-
     jQuery.ajax({
         url: "/api_service/create_new_user",
         type: "POST",
@@ -76,14 +64,14 @@ function createUser() {
         async: false,
         contentType: "application/json; charset=utf-8"})
         .done(function() {
-            $.snackbar(snackbarOptions);
+            showSnackBar("User " + request_data.user_name + " successfully created")
             $('#modal_createUser').modal('toggle');
             username_input.value = "";
             email_input.value = "";
             password_input.value = "";
         })
         .fail(function() {
-            $.snackbar(snackbarOptionsError);
+            showSnackBar("Error. User " + request_data.user_name + " is not created")
             $("#modal_createUser").effect("shake");
         })
     
