@@ -7,9 +7,9 @@ class ClassToolkit():
     @classmethod
     def getAttributes(cls):
         var = vars(cls)
-        var = filter(lambda x: "__" not in x, var)
-        var = filter(lambda x: "getAttributes" not in x, var)
-        var = filter(lambda x: "_sa_class_manager" not in x, var)
+        filter_columns = [ "__", "_sa_class_manager", "password_md5","salt", "get_id", "check_password", "create_new_user","getAttributes"]
+        var = list(filter(lambda x: "__" not in x, var))
+        var = list(set(var) - set(filter_columns))
         return json.dumps(list(var))
 
 class tables(db.Model,ClassToolkit):
