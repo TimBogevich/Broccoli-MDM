@@ -55,6 +55,21 @@ btn_save.onclick = function() {
 };
 
 
+filter.onkeyup = function () {
+    try {
+        var expressFilter = compileExpression(filter.value);
+        var array = table.filter(prop => expressFilter(prop))
+    } catch(e) {}
+
+    if (_.isEmpty(array))  {
+        spreadsheet.loadData(table)
+    }
+    else {
+        spreadsheet.loadData(array)
+    }
+    
+}
+
 // Interface
 api_link.href = apiUrl
 
