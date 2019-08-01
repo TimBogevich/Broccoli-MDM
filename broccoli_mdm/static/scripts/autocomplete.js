@@ -19,7 +19,7 @@ function split( val ) {
       source: function( request, response ) {
         // delegate back to autocomplete, but extract the last term
         response( $.ui.autocomplete.filter(
-            tableHeader.concat(["==", "in", "or", "and", ">", "<", "!="]), extractLast( request.term ) ) );
+            tableHeaderQuoted.concat(["==", "in", "or", "and", ">", "<", "!="]), extractLast( request.term ) ) );
       },
       focus: function() {
         // prevent value inserted on focus

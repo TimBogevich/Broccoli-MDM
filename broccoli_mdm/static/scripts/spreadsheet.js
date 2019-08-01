@@ -6,6 +6,7 @@ headerUrl = "/api_service/attributes/" + getUrlPath(1)
 try {
     apiData = httpGet(apiUrl);
     tableHeader = JSON.parse(httpGet(headerUrl));
+    tableHeaderQuoted = ("'" + tableHeader.join("','") + "'").split(",")
     etalonTable = apiData.objects;
     table = JSON.parse(JSON.stringify(etalonTable));
 }
@@ -62,9 +63,11 @@ filter.onkeyup = function () {
     } catch(e) {}
 
     if (_.isEmpty(array))  {
+        filter.classList.add("text-danger")
         spreadsheet.loadData(table)
     }
     else {
+        filter.classList.remove("text-danger")
         spreadsheet.loadData(array)
     }
     
