@@ -8,3 +8,4 @@ Flask_Restless==0.17.0
 configparser==3.7.4
 mysqlclient==1.4.2.post1
 gunicorn==19.9.0
+alchemyjsonschema==0.5.0
