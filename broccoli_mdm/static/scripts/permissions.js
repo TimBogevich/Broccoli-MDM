@@ -53,5 +53,5 @@ btn_save.onclick = function() {
     detectChanges(etalonTable, table_with_id)
     writeBack(cdc, table_with_id)
     cdc = []
-    $.snackbar(snackbarOptions("Data saved successfully"));
+    showSnackBar("Data saved successfully");
 };

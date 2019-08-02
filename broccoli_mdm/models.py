@@ -10,7 +10,7 @@ class tables(db.Model):
     schema = db.Column(db.String) 
     name = db.Column(db.String, unique=True)
     sql_alchemy_definition = db.Column(db.String)
-    is_active = db.Column(db.Integer)
+    is_active = db.Column(db.SmallInteger)
 
 class connections(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -21,7 +21,7 @@ class users(db.Model,UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     user_name = db.Column(db.String, unique=True, nullable=False)
     email = db.Column(db.String, nullable=False)
-    sysadmin = db.Column(db.Integer)
+    sysadmin = db.Column(db.SmallInteger)
     password_md5 = db.Column(db.String, nullable=False)
     salt = db.Column(db.String)
     def get_id(self):

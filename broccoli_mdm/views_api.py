@@ -1,5 +1,5 @@
 from flask import render_template, request, Response
-from broccoli_mdm import app, manager
+from broccoli_mdm import app, manager, db
 from broccoli_mdm.init_models import *
 from sqlalchemy.inspection import inspect
 from broccoli_mdm.models import tables, connections, users, permissions
@@ -7,8 +7,10 @@ from flask_login import current_user, login_required, login_user, logout_user
 import flask_restless
 from sqlalchemy import func
 from alchemyjsonschema import SchemaFactory
+from alchemyjsonschema import Classifier
 from alchemyjsonschema import NoForeignKeyWalker
 from json import dumps
+import sqlalchemy.types as t
 
 exclude_columns=["password_md5", "salt"]
 
@@ -77,12 +79,12 @@ def api_tech_create_new_user():
         return "success"
 
 @app.route('/api_service/check_connection', methods=["POST"])
-def api_tech_check_connection(connection_string=None):
+def api_tech_check_connection(connection_text=None):
     input = request.get_json()
-    connection_string = input.get("connection_string") or connection_string
+    connection_text = input.get("connection_text") or connection_text
     try:
         from sqlalchemy import create_engine
-        engine = create_engine(connection_string)
+        engine = create_engine(connection_text)
         con = engine.connect()
         con.execute("select 1")
         return Response("Connection success",status=200)
@@ -93,17 +95,39 @@ def api_tech_check_connection(connection_string=None):
 
 @app.route('/api_service/get_schema/<class_name>')
 def api_tech_get_schema(class_name):
-    factory = SchemaFactory(NoForeignKeyWalker)
+    column_to_schema = {
+        t.String: "text",
+        t.Text: "text",
+        t.Integer: "numeric",
+        t.SmallInteger: "checkbox",
+        t.BigInteger: "text", 
+        t.Numeric: "numeric",
+        t.Float: "numeric",
+        t.DateTime: "text",
+        t.Date: "text",
+        t.Time: "text",  
+        t.LargeBinary: "xxx",
+        t.Binary: "xxx",
+        t.Boolean: "boolean",
+        t.Unicode: "text",
+        t.Concatenable: "xxx",
+        t.UnicodeText: "text",
+        t.Interval: "xxx",
+        t.Enum: "text",
+    }
+    classifier = Classifier(mapping=column_to_schema)
+    factory = SchemaFactory(classifier=classifier, walker=NoForeignKeyWalker)
     schema = factory(eval(class_name),excludes=exclude_columns)
     dic = list()
     headers = list()
     for i in schema["properties"].items():
-        i[1]["type"] = "text" if i[1]["type"] == "string" else i[1]["type"] 
-        i[1]["type"] = "numeric" if i[1]["type"] == "integer" else i[1]["type"] 
         column = {
                 "data":i[0],
-                "type": i[1]["type"] 
+                "type": i[1]["type"],
             }
+        if i[1]["type"] == "checkbox":
+            column["checkedTemplate"] = 1
+            column["uncheckedTemplate"] = 0
         dic.append(column)
         headers.append(i[0])
     schema["properties"] = dic
