@@ -3,28 +3,21 @@ from flask_login import UserMixin
 import hashlib
 import json
 
-class ClassToolkit():
-    @classmethod
-    def getAttributes(cls):
-        var = vars(cls)
-        filter_columns = [ "__", "_sa_class_manager", "password_md5","salt", "get_id", "check_password", "create_new_user","getAttributes"]
-        var = list(filter(lambda x: "__" not in x, var))
-        var = list(set(var) - set(filter_columns))
-        return json.dumps(list(var))
 
-class tables(db.Model,ClassToolkit):
+
+class tables(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     schema = db.Column(db.String) 
     name = db.Column(db.String, unique=True)
     sql_alchemy_definition = db.Column(db.String)
     is_active = db.Column(db.Integer)
 
-class connections(db.Model,ClassToolkit):
+class connections(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     schema = db.Column(db.String, unique=True) 
     connection_string = db.Column(db.String)
 
-class users(db.Model,UserMixin,ClassToolkit):
+class users(db.Model,UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     user_name = db.Column(db.String, unique=True, nullable=False)
     email = db.Column(db.String, nullable=False)
@@ -44,11 +37,9 @@ class users(db.Model,UserMixin,ClassToolkit):
         db.session.add(user)
         db.session.commit()
 
-#class groups(db.Model,UserMixin,ClassToolkit):
-#    id = db.Column(db.Integer, primary_key=True)
-# 
+
             
-class permissions(db.Model,UserMixin,ClassToolkit):
+class permissions(db.Model,UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer)
     table_id = db.Column(db.Integer)
@@ -56,3 +47,6 @@ class permissions(db.Model,UserMixin,ClassToolkit):
     edit_flag = db.Column(db.SmallInteger)
     delete_flag = db.Column(db.SmallInteger)
     __table_args__ = (db.UniqueConstraint("user_id", "table_id"),)
+
+
+

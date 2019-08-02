@@ -6,7 +6,11 @@ from broccoli_mdm.models import tables, connections, users, permissions
 from flask_login import current_user, login_required, login_user, logout_user
 import flask_restless
 from sqlalchemy import func
+from alchemyjsonschema import SchemaFactory
+from alchemyjsonschema import NoForeignKeyWalker
+from json import dumps
 
+exclude_columns=["password_md5", "salt"]
 
 def check_permissions(**kw):
     if current_user.sysadmin == 1:
@@ -54,7 +58,7 @@ manager.create_api(tables, methods=['GET', 'POST', 'PATCH', 'PUT', 'DELETE'], pr
 
 manager.create_api(connections, methods=['GET', 'POST', 'PATCH', 'PUT', 'DELETE'],preprocessors=preprocessors)
 
-manager.create_api(users, methods=['GET', 'POST', 'PATCH', 'PUT', 'DELETE'], exclude_columns=["password_md5", "salt"], preprocessors=preprocessors)
+manager.create_api(users, methods=['GET', 'POST', 'PATCH', 'PUT', 'DELETE'], exclude_columns=exclude_columns, preprocessors=preprocessors)
 
 manager.create_api(permissions, methods=['GET', 'POST', 'PATCH', 'PUT', 'DELETE'], preprocessors=preprocessors)
 
@@ -63,11 +67,8 @@ manager.create_api(permissions, methods=['GET', 'POST', 'PATCH', 'PUT', 'DELETE'
 def api_tech_pk(class_name):
     return inspect(eval(class_name)).primary_key[0].name
 
-@app.route('/api_service/attributes/<class_name>')
-def api_tech_attributes(class_name):
-    return eval(class_name).getAttributes()
 
-
+@login_required
 @app.route('/api_service/create_new_user', methods=["POST"])
 def api_tech_create_new_user():
     input = request.get_json()
@@ -88,3 +89,23 @@ def api_tech_check_connection(connection_string=None):
     except Exception as e:
         print(e)
         return Response("Can't connect to database: "+ str(e) ,status=400)
+
+
+@app.route('/api_service/get_schema/<class_name>')
+def api_tech_get_schema(class_name):
+    factory = SchemaFactory(NoForeignKeyWalker)
+    schema = factory(eval(class_name),excludes=exclude_columns)
+    dic = list()
+    headers = list()
+    for i in schema["properties"].items():
+        i[1]["type"] = "text" if i[1]["type"] == "string" else i[1]["type"] 
+        i[1]["type"] = "numeric" if i[1]["type"] == "integer" else i[1]["type"] 
+        column = {
+                "data":i[0],
+                "type": i[1]["type"] 
+            }
+        dic.append(column)
+        headers.append(i[0])
+    schema["properties"] = dic
+    schema["headers"] = headers
+    return   dumps(schema)

@@ -1,11 +1,10 @@
-
-
 // Initialisation
 apiUrl = "/api/"+ getUrlPath(1)
-headerUrl = "/api_service/attributes/" + getUrlPath(1)
+headerUrl = "/api_service/get_schema/" + getUrlPath(1)
 try {
     apiData = httpGet(apiUrl);
-    tableHeader = JSON.parse(httpGet(headerUrl));
+    tableSchema = JSON.parse(httpGet(headerUrl));
+    tableHeader = tableSchema.headers
     tableHeaderQuoted = ("'" + tableHeader.join("','") + "'").split(",")
     etalonTable = apiData.objects;
     table = JSON.parse(JSON.stringify(etalonTable));
@@ -23,17 +22,6 @@ function showSnackBar(text, style="toast", timeout=5000){
         timeout: timeout
     }
     $.snackbar(snackbarOptions)
-}
-
-
-function getColumnProps() {
-    columns = []
-    tableHeader.forEach(function(part, index, theArray) {
-        if (theArray[index] != "id") {
-            columns.push({data:theArray[index]})
-        }
-      });
-    return columns
 }
 
 
@@ -101,7 +89,7 @@ spreadsheet = new Handsontable(hot, {
     contextMenu: true,
     rowHeaders: true,
     startRows:  1,
-    columns: getColumnProps()
+    columns: tableSchema.properties.filter(prop => prop.data != "id")
 });
 
 
