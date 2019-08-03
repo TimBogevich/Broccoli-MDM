@@ -11,15 +11,27 @@
             <input id="filter" class="form-control" placeholder="filter" type="text" name="">
         </div>
 
-        <div class="col col-3">    
+        <div class="col col-1">    
             <div class="dropbown">
-                    <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Options
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                        <a id="api_link" target="_blank" class="dropdown-item" href="">API</a>
-                        <a class="dropdown-item disabled" href="">Business process (comming soon)</a>
-                    </div>
+                <button id="btnGroupExport" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Export
+                </button>
+                <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                    <button id="btn_export" class="dropdown-item" onclick='exportCSV(getUrlPath(1) + ".csv", table)' >csv</button>
+                    <a class="dropdown-item disabled" href="">Excel.xls (comming soon)</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col col-1">    
+            <div class="dropbown">
+                <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Options
+                </button>
+                <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                    <a id="api_link" target="_blank" class="dropdown-item" href="">API</a>
+                    <a class="dropdown-item disabled" href="">Business process (comming soon)</a>
+                </div>
             </div>
         </div>
     </div>
@@ -45,6 +57,8 @@
 
 {% block scripts %}
 <script src="/static/scripts/spreadsheet.js?version=2"></script>
+<script src="/static/scripts/FileSaver.min.js"></script>
+<script src="/static/scripts/exporter.js"></script>
 {% endblock %}
 
 

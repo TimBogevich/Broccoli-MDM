@@ -103,16 +103,8 @@ def api_tech_get_schema(class_name):
         t.BigInteger: "text", 
         t.Numeric: "numeric",
         t.Float: "numeric",
-        t.DateTime: "text",
-        t.Date: "text",
-        t.Time: "text",  
-        t.LargeBinary: "xxx",
-        t.Binary: "xxx",
-        t.Boolean: "boolean",
-        t.Unicode: "text",
-        t.Concatenable: "xxx",
-        t.UnicodeText: "text",
-        t.Interval: "xxx",
+        t.DateTime: "date",
+        t.Date: "date",
         t.Enum: "text",
     }
     classifier = Classifier(mapping=column_to_schema)
@@ -133,3 +125,4 @@ def api_tech_get_schema(class_name):
     schema["properties"] = dic
     schema["headers"] = headers
     return   dumps(schema)
+    

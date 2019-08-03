@@ -89,7 +89,8 @@ spreadsheet = new Handsontable(hot, {
     contextMenu: true,
     rowHeaders: true,
     startRows:  1,
-    columns: tableSchema.properties.filter(prop => prop.data != "id")
+    columns: tableSchema.properties.filter(prop => prop.data != "id"),
+    columnSorting: true
 });
 
 
