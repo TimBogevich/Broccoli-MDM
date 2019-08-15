@@ -34,15 +34,18 @@ def check_permissions(**kw):
     else:
         raise flask_restless.ProcessingException(code=401) 
 
-preprocessors=dict(GET_MANY=[check_permissions],
+
+
+preprocessors=dict( GET_MANY=[check_permissions],
                     GET_SINGLE=[check_permissions], 
-                    POST_SINGLE=[check_permissions],
+                    POST=[check_permissions],
                     PUT_SINGLE=[check_permissions], 
                     PUT_MANY=[check_permissions], 
                     DELETE_MANY=[check_permissions],
                     DELETE_SINGLE=[check_permissions])
 
-tables_prepr=dict(PUT_SINGLE=[check_permissions], 
+tables_prepr=dict(  POST=[check_permissions],
+                    PUT_SINGLE=[check_permissions],
                     PUT_MANY=[check_permissions], 
                     DELETE_MANY=[check_permissions],
                     DELETE_SINGLE=[check_permissions])

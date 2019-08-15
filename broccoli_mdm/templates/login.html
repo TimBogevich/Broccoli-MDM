@@ -42,6 +42,13 @@
 </body>
 
 <script>
+    password.onkeypress = function(key) {
+        if (key.key === "Enter") {
+            login();
+        }
+    }
+
+
     function login() {
         request_data = {
             "user_name" : user_name.value,

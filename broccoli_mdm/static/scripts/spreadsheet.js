@@ -40,7 +40,6 @@ btn_save.onclick = function() {
     detectChanges(etalonTable, table)
     writeBack(cdc, table)
     cdc = []
-    showSnackBar("Data saved successfully");
 };
 
 
@@ -143,21 +142,47 @@ function detectChanges(originTable, modifiedTable) {
     
 }
 
+function errorRaise(data) {
+    showSnackBar(data.responseText)
+    throw new Error("You have no sufficient permissions on this object");
+    return;
+}
 
 function writeBack(changesArray, tableArray) {
     changesArray.forEach((element) => {
         row = tableArray.find( x => x.id === element.index )
         if (element.changeType == "edit") {
-            axios.patch(apiUrl + "/" + row.id, row)
+            $.ajax({ url: apiUrl + "/" + row.id
+                ,type: "PATCH"
+                ,contentType: "application/json; charset=utf-8"
+                ,async: false
+                ,data: JSON.stringify(row)})
+            .fail(function(data){
+                errorRaise(data)
+            });
+
         }
         else if (element.changeType == "insert") {
-            axios.post(apiUrl, row)
+            $.ajax({ url: apiUrl
+                    ,type: "POST"
+                    ,contentType: "application/json; charset=utf-8"
+                    ,async: false
+                    ,data: JSON.stringify(row)})
+            .fail(function(data){
+                errorRaise(data)
+            });
         }
         else if (element.changeType == "delete") {
-            console.log(element)
-            axios.delete(apiUrl + "/" + element.index)
+                $.ajax({ url: apiUrl + "/" + element.index
+                ,type: "DELETE"
+                ,async: false})
+            .fail(function(data){
+                errorRaise(data)
+            });
+
         }
     })
+    showSnackBar("Data saved successfully");
 }
 
 
