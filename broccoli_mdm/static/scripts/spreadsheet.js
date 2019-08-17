@@ -62,7 +62,7 @@ filter.onkeyup = function () {
 
 // Interface
 api_link.href = apiUrl
-
+json_schema_link.href = "/api_service/get_schema/" + getUrlPath(1)
 
 
 
@@ -191,6 +191,7 @@ function writeBack(changesArray, tableArray) {
 
 function getUrlPath(indent) {
     var url = window.location.pathname;
+    url = url.replace(/#$/, "");
     var array = url.split("/");
     var array = array.slice(1).slice(-3);
     return array[indent];

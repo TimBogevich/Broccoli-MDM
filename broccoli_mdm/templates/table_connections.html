@@ -89,7 +89,8 @@
             dataType: "text",
             contentType: "application/json; charset=utf-8"})
             .done(function(data) {
-                showSnackBar(data)
+                showSnackBar("Connection created successfully " + data)
+                location.reload();
             })
             .fail(function(data) {
                 showSnackBar(data)
