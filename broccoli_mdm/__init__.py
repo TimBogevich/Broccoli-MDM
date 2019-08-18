@@ -5,9 +5,13 @@ from broccoli_mdm.config import Config
 from flask_restless import APIManager
 from flask_migrate import Migrate
 import os
+import sentry_sdk
+from sentry_sdk.integrations.flask import FlaskIntegration
 
-
-
+sentry_sdk.init(
+    dsn="https://b2424598065b4ef7a5ce1e5ad3d613b6@sentry.io/1533462",
+    integrations=[FlaskIntegration()]
+)
 
 app = Flask(__name__)
 app.secret_key = os.environ.get("BROCCOLI_SECRET_KEY")

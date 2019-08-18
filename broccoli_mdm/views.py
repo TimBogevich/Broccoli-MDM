@@ -3,7 +3,7 @@ from broccoli_mdm import app, login_manager
 from flask_login import current_user, login_required, login_user, logout_user
 from broccoli_mdm.models import users
 import hashlib 
-
+from sentry_sdk import capture_message
 
 @login_manager.user_loader
 def load_user(id):
@@ -81,3 +81,9 @@ def login():
 def logout():
     logout_user()
     return redirect(url_for('login'))
+
+
+@app.errorhandler(404)
+def page_not_found(e):
+    capture_message("Page not found, 404 error", level="error")
+    return render_template('404.html'), 404
