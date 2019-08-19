@@ -2,8 +2,8 @@ from flask import render_template, request, redirect, url_for, Response
 from broccoli_mdm import app, login_manager
 from flask_login import current_user, login_required, login_user, logout_user
 from broccoli_mdm.models import users
-import hashlib 
 from sentry_sdk import capture_message
+
 
 @login_manager.user_loader
 def load_user(id):
@@ -17,6 +17,7 @@ def index():
         'index.html',
         title='Home Page',
     )
+
 
 @app.route('/table/<tablename>')
 @login_required
@@ -34,6 +35,7 @@ def admin(path):
         'admin_tables.html',
         title='Preferences editor')
 
+
 @app.route('/admin/users')
 @login_required
 def admin_users():
@@ -48,6 +50,7 @@ def admin_connections():
     return render_template(
         'table_connections.html',
         title='Preferences editor')
+
 
 @app.route('/admin/permissions')
 @login_required

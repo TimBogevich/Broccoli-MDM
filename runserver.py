@@ -1,10 +1,11 @@
-"""
-This script runs the broccoli_mdm application using a development server.
-"""
-
 from os import environ
-from broccoli_mdm import app
+from broccoli_mdm import app # NOQA
+import broccoli_mdm.models # NOQA
+import broccoli_mdm.init_models # NOQA
+import broccoli_mdm.views # NOQA
+import broccoli_mdm.views_api # NOQA
 from werkzeug.serving import run_simple
+
 
 if __name__ == '__main__':
     HOST = environ.get('SERVER_HOST', 'localhost')
