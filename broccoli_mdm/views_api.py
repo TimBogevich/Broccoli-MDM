@@ -1,6 +1,6 @@
 from flask import request, Response
 from broccoli_mdm import app, manager
-from broccoli_mdm.init_models import * # NOQA
+from broccoli_mdm.init_models import table_class_objects
 from sqlalchemy.inspection import inspect
 from broccoli_mdm.models import tables, connections, users, permissions
 from flask_login import current_user, login_required
@@ -54,8 +54,8 @@ tables_prepr = dict(POST=[check_permissions],
 
 
 # Generate API for list of taybles
-for obj in table_object: # NOQA
-    manager.create_api(table_object[obj], # NOQA
+for obj in table_class_objects: # NOQA
+    manager.create_api(table_class_objects[obj], # NOQA
                        methods=['GET', 'POST', 'PATCH', 'DELETE'],
                        preprocessors=preprocessors,
                        results_per_page=0)
@@ -118,9 +118,15 @@ def api_tech_get_schema(class_name):
         t.Date: "date",
         t.Enum: "text",
     }
+    
+    if class_name in ["tables", "connections", "users", "permissions"]:
+        class_object = eval(class_name)
+    else:
+        class_object = table_class_objects[class_name]
+
     classifier = Classifier(mapping=column_to_schema)
     factory = SchemaFactory(classifier=classifier, walker=NoForeignKeyWalker)
-    schema = factory(eval(class_name), excludes=exclude_columns)
+    schema = factory(class_object, excludes=exclude_columns)
     dic = list()
     headers = list()
     for i in schema["properties"].items():

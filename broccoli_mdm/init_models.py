@@ -11,14 +11,12 @@ try:
 except Exception as e:
     print(e)
 
-table_object = dict()
+table_class_objects = dict()
 for row in tables.query.all():
     if row.is_active == 1:
-        s = f"""class {row.name.lower()} (db.Model):
-                __bind_key__ = '{row.schema}'
-                __tablename__ = '{row.name.lower()}'"""
+        class_name = row.name.lower()
+        class_definition = {"__bind_key__" : row.schema, "__tablename__": class_name}
         try:
-            exec(s)
-            table_object[row.name] = eval(row.name.lower())
+            table_class_objects[class_name] = type(class_name, (db.Model,), class_definition)
         except Exception as e:
             print(e)
