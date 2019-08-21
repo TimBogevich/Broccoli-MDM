@@ -17,7 +17,11 @@ source .venv/bin/activate
 
 pip install -r requirements.txt
 
-3. Run application
+3. Set environment variables:
+	BROCCOLI_SECRET_KEY = random value
+	USE_SENTRY = 0
+
+4. Run application
 
 linux: python runserver.py
 
