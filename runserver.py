@@ -1,9 +1,6 @@
 from os import environ
 from broccoli_mdm import app # NOQA
-import broccoli_mdm.models # NOQA
-import broccoli_mdm.init_models # NOQA
-import broccoli_mdm.views # NOQA
-import broccoli_mdm.views_api # NOQA
+
 
 
 
