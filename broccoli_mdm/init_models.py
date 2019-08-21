@@ -15,7 +15,7 @@ table_class_objects = dict()
 for row in tables.query.all():
     if row.is_active == 1:
         class_name = row.name.lower()
-        class_definition = {"__bind_key__" : row.schema, "__tablename__": class_name}
+        class_definition = {"__bind_key__": row.schema, "__tablename__": class_name}
         try:
             table_class_objects[class_name] = type(class_name, (db.Model,), class_definition)
         except Exception as e:

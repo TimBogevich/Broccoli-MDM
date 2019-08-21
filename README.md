@@ -17,9 +17,13 @@ source .venv/bin/activate
 
 pip install -r requirements.txt
 
-3. Set environment variables:
-	BROCCOLI_SECRET_KEY = random value
-	USE_SENTRY = 0
+3. Set environment variables if you need (OPTIONAL):
+
+	BROCCOLI_SECRET_KEY = random long value (necessary for sessions encoding). MANDATORY FOR PRODUCTION USAGE.
+	
+	USE_SENTRY = 1 (enable sentry support https://sentry.io - the error tracker)
+	
+	SENTRY_KEY = your_sentry_key (if you set USE_SENTRY = 1 )
 
 4. Run application
 

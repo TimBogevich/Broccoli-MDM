@@ -118,7 +118,7 @@ def api_tech_get_schema(class_name):
         t.Date: "date",
         t.Enum: "text",
     }
-    
+
     if class_name in ["tables", "connections", "users", "permissions"]:
         class_object = eval(class_name)
     else:

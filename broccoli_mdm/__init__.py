@@ -8,10 +8,12 @@ import os
 import sentry_sdk
 from sentry_sdk.integrations.flask import FlaskIntegration
 
-sentry_sdk.init(
-    dsn=os.environ.get("SENTRY_KEY"),
-    integrations=[FlaskIntegration()]
-)
+
+if os.environ.get("USE_SENTRY") == "1":
+    sentry_sdk.init(
+        dsn=os.environ.get("SENTRY_KEY"),
+        integrations=[FlaskIntegration()]
+    )
 
 app = Flask(__name__)
 app.secret_key = os.environ.get("BROCCOLI_SECRET_KEY")

@@ -2,8 +2,6 @@ from os import environ
 from broccoli_mdm import app # NOQA
 
 
-
-
 if __name__ == '__main__':
     HOST = environ.get('SERVER_HOST', 'localhost')
     try:
