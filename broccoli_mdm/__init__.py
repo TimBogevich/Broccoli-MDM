@@ -9,7 +9,7 @@ import sentry_sdk
 from sentry_sdk.integrations.flask import FlaskIntegration
 
 sentry_sdk.init(
-    dsn="https://b2424598065b4ef7a5ce1e5ad3d613b6@sentry.io/1533462",
+    dsn=os.environ.get("SENTRY_KEY"),
     integrations=[FlaskIntegration()]
 )
 
