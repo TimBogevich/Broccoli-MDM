@@ -11,6 +11,7 @@ from alchemyjsonschema import Classifier
 from alchemyjsonschema import NoForeignKeyWalker
 from json import dumps
 import sqlalchemy.types as t
+import sys
 
 exclude_columns = ["password_md5", "salt"]
 
@@ -76,7 +77,8 @@ manager.create_api(permissions, methods=[
 
 @app.route('/api_service/pk/<class_name>')
 def api_tech_pk(class_name):
-    return inspect(eval(class_name)).primary_key[0].name
+    class_object = getattr(sys.modules[__name__], class_name)
+    return inspect(class_object).primary_key[0].name
 
 
 @login_required
@@ -120,7 +122,7 @@ def api_tech_get_schema(class_name):
     }
 
     if class_name in ["tables", "connections", "users", "permissions"]:
-        class_object = eval(class_name)
+        class_object = getattr(sys.modules[__name__], class_name)
     else:
         class_object = table_class_objects[class_name]
 
