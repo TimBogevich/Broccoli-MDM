@@ -2,6 +2,8 @@
 Broccoli-MDM is an open source master data management tool(MDM).
 MDM tools are used to store and define and control common data of an organisation in the one point.
 
+![screenshot](http://storage.googleapis.com/broccoli-mdm-site/images/3.png)
+
 ## Supported browsers
 1. Chrome
 2. Firefox
