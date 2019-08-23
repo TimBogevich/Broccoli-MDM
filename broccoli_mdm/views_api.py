@@ -75,12 +75,6 @@ manager.create_api(permissions, methods=[
                    'GET', 'POST', 'PATCH', 'PUT', 'DELETE'], preprocessors=preprocessors)
 
 
-@app.route('/api_service/pk/<class_name>')
-def api_tech_pk(class_name):
-    class_object = getattr(sys.modules[__name__], class_name)
-    return inspect(class_object).primary_key[0].name
-
-
 @login_required
 @app.route('/api_service/create_new_user', methods=["POST"])
 def api_tech_create_new_user():
@@ -143,4 +137,5 @@ def api_tech_get_schema(class_name):
         headers.append(i[0])
     schema["properties"] = dic
     schema["headers"] = headers
+    schema["primaryKey"] = inspect(class_object).primary_key[0].name
     return dumps(schema)

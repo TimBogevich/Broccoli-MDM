@@ -1,5 +1,5 @@
 from os import environ
-from broccoli_mdm import app # NOQA
+from broccoli_mdm import app
 
 
 if __name__ == '__main__':
