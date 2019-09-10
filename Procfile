@@ -1,1 +1,1 @@
-web: gunicorn broccoli_mdm:app
+web: python runserver.py

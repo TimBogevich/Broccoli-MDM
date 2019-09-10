@@ -14,6 +14,26 @@ catch(error) {
     throw new Error("You have no permissions to read this object");
 }
 
+//validator function
+var notEmpty = function (value, callback) {
+    if (!value || String(value).length === 0) {
+        callback(false);
+    } else {
+        callback(true);
+    }
+};
+
+//set validator for required columns
+for (column of tableSchema.properties) {
+    if (column.required) column.validator = notEmpty
+}
+
+function validateTable() {
+	spreadsheet.validateCells((valid) => {
+        if (!valid) showSnackBar("You have empty mandatory fields or incorrect data type");
+        return valid
+	})
+}
 
 function showSnackBar(text, style="toast", timeout=5000){
     snackbarOptions =  {
@@ -37,6 +57,9 @@ if(table.length == 0 ) {
 
 // Events
 btn_save.onclick = function() {
+    if (!validateTable()) {
+        return
+    } 
     detectChanges(etalonTable, table)
     writeBack(cdc, table)
     cdc = []
@@ -63,8 +86,6 @@ filter.onkeyup = function () {
 // Interface
 api_link.href = apiUrl
 json_schema_link.href = "/api_service/get_schema/" + getUrlPath(1)
-
-
 
 
 function httpGet(theUrl) {
