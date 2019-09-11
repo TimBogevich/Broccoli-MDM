@@ -53,26 +53,24 @@ tables_prepr = dict(POST=[check_permissions],
                     DELETE_MANY=[check_permissions],
                     DELETE_SINGLE=[check_permissions])
 
+methods=['GET', 'POST', 'PATCH', 'DELETE']
+
 
 # Generate API for list of taybles
 for obj in table_class_objects: # NOQA
     manager.create_api(table_class_objects[obj], # NOQA
-                       methods=['GET', 'POST', 'PATCH', 'DELETE'],
+                       methods=methods,
                        preprocessors=preprocessors,
                        results_per_page=0)
 
 
-manager.create_api(tables, methods=[
-                   'GET', 'POST', 'PATCH', 'PUT', 'DELETE'], preprocessors=tables_prepr)
+manager.create_api(tables, methods=methods, preprocessors=tables_prepr)
 
-manager.create_api(connections, methods=[
-                   'GET', 'POST', 'PATCH', 'PUT', 'DELETE'], preprocessors=preprocessors)
+manager.create_api(connections, methods=methods, preprocessors=preprocessors)
 
-manager.create_api(users, methods=['GET', 'POST', 'PATCH', 'PUT', 'DELETE'],
-                   exclude_columns=exclude_columns, preprocessors=preprocessors)
+manager.create_api(users, methods=methods, exclude_columns=exclude_columns, preprocessors=preprocessors)
 
-manager.create_api(permissions, methods=[
-                   'GET', 'POST', 'PATCH', 'PUT', 'DELETE'], preprocessors=preprocessors)
+manager.create_api(permissions, methods=methods, preprocessors=preprocessors)
 
 
 @login_required
@@ -129,6 +127,7 @@ def api_tech_get_schema(class_name):
         column = {
             "data": i[0],
             "type": i[1]["type"],
+            "required": i[0] in schema["required"]
         }
         if i[1]["type"] == "checkbox":
             column["checkedTemplate"] = 1
@@ -139,3 +138,16 @@ def api_tech_get_schema(class_name):
     schema["headers"] = headers
     schema["primaryKey"] = inspect(class_object).primary_key[0].name
     return dumps(schema)
+
+
+from flask import request
+def shutdown_server():
+    func = request.environ.get('werkzeug.server.shutdown')
+    if func is None:
+        raise RuntimeError('Not running with the Werkzeug Server')
+    func()
+
+@app.route('/shutdown', methods=['POST'])
+def shutdown():
+    shutdown_server()
+    return 'Server shutting down...'
