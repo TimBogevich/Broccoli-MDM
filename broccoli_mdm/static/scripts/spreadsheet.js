@@ -28,12 +28,15 @@ for (column of tableSchema.properties) {
     if (column.required) column.validator = notEmpty
 }
 
+var result = {}
 function validateTable() {
-	spreadsheet.validateCells((valid) => {
-        if (!valid) showSnackBar("You have empty mandatory fields or incorrect data type");
-        return valid
-	})
+    spreadsheet.validateCells(function(validity) {
+        result.is_valid =  validity
+    })
+    return result
 }
+
+
 
 function showSnackBar(text, style="toast", timeout=5000){
     snackbarOptions =  {
@@ -56,13 +59,19 @@ if(table.length == 0 ) {
 }
 
 // Events
+
 btn_save.onclick = function() {
-    if (!validateTable()) {
+    validation = validateTable()
+    if (_.isEqual(validation.is_valid, false)) {
+        showSnackBar("You have empty mandatory fields or incorrect data type!");
         return
     } 
     detectChanges(etalonTable, table)
-    writeBack(cdc, table)
-    cdc = []
+    if (cdc) {
+        writeBack(cdc, table)
+        delete cdc
+    }
+
 };
 
 
@@ -109,6 +118,7 @@ spreadsheet = new Handsontable(hot, {
     contextMenu: true,
     rowHeaders: true,
     startRows:  1,
+    dateFormat: "YYYY-MM-DD",
     columns: tableSchema.properties.filter(prop => prop.data != "id"),
     columnSorting: true
 });
