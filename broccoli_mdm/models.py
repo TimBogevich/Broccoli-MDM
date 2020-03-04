@@ -7,7 +7,6 @@ class tables(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     schema = db.Column(db.String)
     name = db.Column(db.String, unique=True)
-    sql_alchemy_definition = db.Column(db.String)
     is_active = db.Column(db.SmallInteger)
 
 

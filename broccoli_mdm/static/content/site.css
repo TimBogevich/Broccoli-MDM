@@ -91,7 +91,7 @@ body {
 .sidenav-item {
     padding-left: 60px;
     padding-top: 15px;
-    font-family: Roboto;
+    font-family: Roboto,Helvetica,Arial,sans-serif;
     font-size: 17px;
     color: #242424;
     display: block;
@@ -100,7 +100,7 @@ body {
 .item-group {
     padding-left: 30px;
     padding-top: 15px;
-    font-family: Roboto;
+    font-family: Roboto,Helvetica,Arial,sans-serif;
     font-size: 17px;
     color: #999999;
     display: block;
