@@ -9,5 +9,5 @@ configparser==3.7.4
 mysqlclient==1.4.2.post1
 gunicorn==19.9.0
 alchemyjsonschema==0.5.0
-sentry-sdk==0.10.2
+sentry-sdk==1.14.0
 blinker==1.4
