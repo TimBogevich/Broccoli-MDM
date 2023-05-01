@@ -1,4 +1,4 @@
-Flask==1.0.3
+Flask==2.3.2
 Flask_Login==0.4.1
 alembic==1.0.10
 Flask_Migrate==2.5.2
